@@ -8,15 +8,15 @@ return function(day: number, inputFilePath: string?): string
         inputFilePath = buildDateDirPath(day) .. "/input.txt"
         
         if not fs.isFile(inputFilePath) then
-            local cookie = process.env["AOC_SESSION_COOKIE"]
-            if not cookie then
+            local sessionCookie = process.env["AOC_SESSION_COOKIE"]
+            if not sessionCookie then
                 error("Missing AOC_SESSION_COOKIE environment variable")
             end
 
             local response = net.request({
                 url = "https://adventofcode.com/" .. process.env.year .. "/day/" .. day .. "/input",
                 method = "GET",
-                headers = { Cookie = cookie }
+                headers = { Cookie = "session=" .. sessionCookie }
             })
             if not response.ok then
                 error("Failed to fetch input file: " .. response.body)
