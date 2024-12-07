@@ -10,6 +10,12 @@ local parsedArgs = args.parseArgs({
         description = "Day number to solve",
         name = "day",
         required = true
+    },
+    {
+        aliases = { { shortName = "t" } },
+        description = "The type of the parsed input (defaults to any)",
+        name = "type",
+        required = false
     }
 })
 
@@ -20,5 +26,23 @@ if not fs.isDir(dateDirPath) then
 end
 
 if not fs.isFile(dateDirPath .. "/solution.luau") then
-    fs.writeFile(dateDirPath .. "/solution.luau", "function parse(inputText: string): any\n\treturn inputText\nend\n\nfunction part1(input: any)\nend\n\nfunction part2(input: any)\nend\n\nreturn {\n\tparse = parse,\n\tpart1 = part1,\n\tpart2 = part2\n}")
+    local parsedType = parsedArgs.options["type"] or "any"
+    local fileContent = table.concat({
+        "function parse(inputText: string): " .. parsedType,
+        "\treturn inputText",
+        "end",
+        "",
+        "function part1(input: " .. parsedType .. ")",
+        "end",
+        "",
+        "function part2(input: " .. parsedType .. ")",
+        "end",
+        "",
+        "return {",
+        "\tparse = parse,",
+        "\tpart1 = part1,",
+        "\tpart2 = part2",
+        "}"
+    }, "\n")
+    fs.writeFile(dateDirPath .. "/solution.luau", fileContent)
 end
