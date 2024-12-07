@@ -18,6 +18,18 @@ local parsedArgs = args.parseArgs({
         description = "Path to input file to use instead of fetching from internet",
         name = "input-file",
         required = false
+    },
+    {
+        aliases = { { shortName = "p1" } },
+        description = "Whether to run part 1 (defaults to true)",
+        name = "run-part1",
+        required = false
+    },
+    {
+        aliases = { { shortName = "p2" } },
+        description = "Whether to run part 2 (defaults to true)",
+        name = "run-part2",
+        required = false
     }
 })
 
@@ -28,5 +40,10 @@ local inputText = loadInputFileText(day, parsedArgs.options["input-file"])
 local solution: Solution = require(dateDirPath .. "/solution")
 local data = solution.parse(inputText)
 
-print("Part 1:", solution.part1(data))
-print("Part 2:", solution.part2(data))
+if parsedArgs.options["run-part1"] ~= "false" then
+    print("Part 1:", solution.part1(data))
+end
+
+if parsedArgs.options["run-part2"] ~= "false" then
+    print("Part 2:", solution.part2(data))
+end
