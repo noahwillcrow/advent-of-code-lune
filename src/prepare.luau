@@ -29,7 +29,7 @@ if not fs.isFile(dateDirPath .. "/solution.luau") then
     local parsedType = parsedArgs.options["type"] or "any"
     local fileContent = table.concat({
         "type Input = " .. parsedType,
-        "function parse(inputText: string): Input,
+        "function parse(inputText: string): Input",
         "\treturn inputText",
         "end",
         "",
