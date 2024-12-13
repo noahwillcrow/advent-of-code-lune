@@ -1,4 +1,5 @@
 local buildDateDirPath = require("./build-date-dir-path")
+local determineYear = require("./determine-year")
 local fs = require("@lune/fs")
 local net = require("@lune/net")
 local process = require("@lune/process")
@@ -14,7 +15,7 @@ return function(day: number, inputFilePath: string?): string
             end
 
             local response = net.request({
-                url = "https://adventofcode.com/" .. process.env.year .. "/day/" .. day .. "/input",
+                url = "https://adventofcode.com/" .. determineYear() .. "/day/" .. day .. "/input",
                 method = "GET",
                 headers = { Cookie = "session=" .. sessionCookie }
             })
